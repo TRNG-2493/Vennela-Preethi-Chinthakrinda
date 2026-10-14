@@ -10,3 +10,4 @@ git fetch - download new commits - read only
 git pull -Fetch the new commits from the remote and merge into your current branch.
 git push -u origin feature/add-priority - Push the branch
 git switch main - switch back to main
+<img width="745" height="176" alt="image" src="https://github.com/user-attachments/assets/282611d9-e7ae-4e01-98d0-9b7c1436a49c" />
