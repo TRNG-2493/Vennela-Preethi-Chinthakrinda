@@ -69,7 +69,12 @@ print("Number of Unique cases:", len(unique_cases))
 # PART 3 - Group by module (defaultdict)
 # Result shape: {"login": ["TC-101", "TC-102", ...], "search": [...], ...}
 # ===========================================================================
-ids_by_module = None         # TODO 3a: create a defaultdict(list)
+ids_by_module = {}       # TODO 3a: create a defaultdict(list)
+for value in unique_cases:
+    module = value["module"]
+    if module not in ids_by_module:
+        ids_by_module[module] = []
+    ids_by_module[module].append(value["id"])
 # TODO 3b: loop over unique_cases and append each case's id under its module
 
 print("By module   :", ids_by_module)
