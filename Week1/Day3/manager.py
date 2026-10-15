@@ -82,9 +82,9 @@ print("By module   :", ids_by_module)
 # ===========================================================================
 # PART 4 - Lookup by ID (dict)
 # ===========================================================================
-lookup = None                # TODO 4a: dict mapping id -> the whole case dict (use unique_cases)
-found_case = None            # TODO 4b: the case for "TC-107", using lookup.get(...)
-missing_case = None          # TODO 4c: lookup for "TC-999" that returns the text "not found" instead of crashing
+lookup = {case["id"]: case for case in unique_cases}  # TODO 4a: dict mapping id -> the whole case dict (use unique_cases)
+found_case = lookup.get("TC-107")  # TODO 4b: the case for "TC-107", using lookup.get(...)
+missing_case = lookup.get("TC-999", "not found")  # TODO 4c: lookup for "TC-999" that returns the text "not found" instead of crashing
 
 print("TC-107      :", found_case)
 print("TC-999      :", missing_case)
