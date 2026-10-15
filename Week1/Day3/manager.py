@@ -38,9 +38,12 @@ PLANNED_IDS = {"TC-101", "TC-102", "TC-103", "TC-104", "TC-105", "TC-106",
 # PART 1 - Look at the raw data (slicing)
 # ===========================================================================
 raw_ids = []                 # TODO 1a: loop over RAW_TEST_CASES, append each case's "id"
-first_three_ids = None       # TODO 1b: slice of raw_ids: the first 3 IDs
-last_two_ids = None          # TODO 1c: slice of raw_ids: the last 2 IDs (negative index)
-every_other_id = None        # TODO 1d: slice of raw_ids: every 2nd ID (step)
+for number in RAW_TEST_CASES:
+    raw_ids.append(number["id"])
+    
+first_three_ids = raw_ids[:3]      # TODO 1b: slice of raw_ids: the first 3 IDs
+last_two_ids = raw_ids[-2:]          # TODO 1c: slice of raw_ids: the last 2 IDs (negative index)
+every_other_id = raw_ids[::2]        # TODO 1d: slice of raw_ids: every 2nd ID (step)
 
 print("Raw records :", len(RAW_TEST_CASES))
 print("First three :", first_three_ids)
