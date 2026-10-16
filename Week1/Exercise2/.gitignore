@@ -1,0 +1,21 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Ignore all log files except sample_app.log
+*.log
+!sample_app.log
+
+# Editor files
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
