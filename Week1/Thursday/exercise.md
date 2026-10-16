@@ -4,7 +4,9 @@ Submit these four things to your instructor (channel, form or LMS, as announced)
 https://github.com/Venny12/Exercise4
 
 2. Branch name (feature/test-utils) and pull request URL.
-https://github.com/Venny12/Exercise4/blob/feature/test-utils/RETROSPECTIVE.md
+https://github.com/Venny12/Exercise4/tree/feature/test-utils
+https://github.com/Venny12/Exercise4/pull/1
+
 
 3. RETROSPECTIVE.md committed in the repo root (the link to it is enough).
 https://github.com/Venny12/Exercise4/blob/main/RETROSPECTIVE.md
