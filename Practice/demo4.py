@@ -3,7 +3,7 @@ def another_decorator(func):
         print("Before the function call")
         result = func(*args, **kwargs)
         print("AFter the function call")
-    #return wrapper   
+    return wrapper   
         
 @another_decorator
 def add(a,b):
@@ -11,3 +11,7 @@ def add(a,b):
 
 result = add(5,3)
 print(f"result of addition: {result}")
+
+#check this
+
+#write logic that returns the number of times a number occurs in this

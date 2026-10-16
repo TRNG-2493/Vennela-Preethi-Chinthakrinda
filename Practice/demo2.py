@@ -17,3 +17,7 @@ cat = Cat()
 dog.sound()  # Output: Dog barks.
 cat.sound()  # Output: Cat meows.
 #calling same method on diff objects this is polymorphism - same method name diff functionality
+
+#create a class employee which is inherited in 2 classes, fulltime employee and parttime employee
+# a fulltime receives fixed monthly sal and benefits, a parttime emp earns based on hourly rate
+# and no of hours, polymor - calculate sal a
