@@ -29,6 +29,42 @@ result = "NONE"         # must end as "WIN", "LOSE" or "QUIT"
 print(f"Guess the number between {MIN_NUMBER} and {MAX_NUMBER}. "
       f"You have {MAX_ATTEMPTS} attempts. Type q to quit.")
 
+while(True):
+    
+    answer = input("Guess (1-100): ").strip()
+    
+    if answer.lower() == "q":
+        print(f"You quit. The number was {SECRET_NUMBER}.")
+        result = "QUIT"
+        break
+    
+    if not answer.isdigit():
+        print("Invalid input: please type a whole number.")
+        continue
+    
+    if(int(answer)<MIN_NUMBER or int(answer)>MAX_NUMBER):
+         print("Out of range: choose a number from 1 to 100.")
+         continue
+    
+    attempts += 1
+    
+    if int(answer) < SECRET_NUMBER:
+        print("Too low")
+    
+    elif int(answer) > SECRET_NUMBER:
+        print("Too high")
+    
+    else:
+        print(f"Correct! You needed {attempts} attempts.")
+        result = "WIN"
+        break
+    
+    if attempts >= MAX_ATTEMPTS:
+        print(f"Out of attempts! The number was {SECRET_NUMBER}.")
+        result = "LOSE"
+        break
+        
+    
 # ---- TODO 1: the game loop ---------------------------------------------------
 # Build a `while True:` loop. Inside it, in THIS order (order matters!):
 #   a) read the answer:  answer = input("Guess (1-100): ").strip()
