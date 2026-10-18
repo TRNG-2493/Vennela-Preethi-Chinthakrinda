@@ -153,53 +153,88 @@ class Suite:
     """A named collection of TestResult objects (has-a, not is-a list)."""
 
     def __init__(self, name):
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Suite name must be non-empty text")
+        
+        self.name = name.strip()
+        self._results = []
+        
         # TODO 2.1: name must be non-empty text after strip() (else ValueError);
         #           store the stripped name in self.name
         # TODO 2.2: create the per-object list self._results here (NOT in the class body)
-        raise NotImplementedError("TODO 2.1-2.2: Suite.__init__")
+        #raise NotImplementedError("TODO 2.1-2.2: Suite.__init__")
 
     @classmethod
     def from_rows(cls, name, rows):
+        suite = cls(name)
+        for row in rows:
+            result = TestResult.from_dict(row)
+            suite.add(result)
+        return suite
         # TODO 2.3: build a suite and add TestResult.from_dict(row) for every row
-        raise NotImplementedError("TODO 2.3: from_rows")
+        #raise NotImplementedError("TODO 2.3: from_rows")
 
     def add(self, result):
+        if not isinstance(result, TestResult):
+            raise TypeError("Only TestResult objects can be added")
+        for existing in self._results:
+            if existing.test_id == result.test_id:
+                raise ValueError(f"Duplicate test ID: {result.test_id}")
+        self._results.append(result)
         # TODO 2.4: not a TestResult -> TypeError; a test_id already in the suite
         #           -> ValueError (mention the id); otherwise append
-        raise NotImplementedError("TODO 2.4: add")
+        #raise NotImplementedError("TODO 2.4: add")
 
     @property
     def results(self):
+        return self._results.copy()
         # TODO 2.5: return a COPY of the internal list
-        raise NotImplementedError("TODO 2.5: results")
+        #raise NotImplementedError("TODO 2.5: results")
 
     def count(self):
+        return len(self._results)
         # TODO 2.5: number of results
-        raise NotImplementedError("TODO 2.5: count")
+        #raise NotImplementedError("TODO 2.5: count")
 
     @property
     def pass_rate(self):
+        if not self._results:
+            return 0.0
+        passed = sum(1 for result in self._results if result.status == "PASS")
+        
+        return(passed/len(self._results)) * 100
         # TODO 2.6: percent (0-100) of results whose status is PASS, out of ALL
         #           results (SKIPPED counts in the total). Empty suite -> 0.0
-        raise NotImplementedError("TODO 2.6: pass_rate")
+        #raise NotImplementedError("TODO 2.6: pass_rate")
 
     @property
     def total_duration(self):
+        return sum(result.duration for result in self._results)
+    
         # TODO 2.7: sum of all durations
-        raise NotImplementedError("TODO 2.7: total_duration")
+        #raise NotImplementedError("TODO 2.7: total_duration")
 
     def counts_by_status(self):
+        counts = {status: 0 for status in TestResult.VALID_STATUSES}
+        
+        for result in self._results:
+            counts[result.status] += 1
+        return counts
         # TODO 2.7: dict with EVERY valid status as a key, e.g.
         #           {"PASS": 2, "FAIL": 1, "SKIPPED": 1, "ERROR": 0}
-        raise NotImplementedError("TODO 2.7: counts_by_status")
+        #raise NotImplementedError("TODO 2.7: counts_by_status")
 
     def failures(self):
+        return [ result for result in self._results if result.status in ("FAIL", "ERROR")]
+        
         # TODO 2.8: list of results whose status is FAIL or ERROR (suite order)
-        raise NotImplementedError("TODO 2.8: failures")
+        #raise NotImplementedError("TODO 2.8: failures")
 
     def slowest(self, n=1):
+        sorted_results = sorted( self._results, key=lambda result: result.duration, reverse=True)
+        return sorted_results[:n]
         # TODO 2.8: the n slowest results, slowest first (sorted with a key)
-        raise NotImplementedError("TODO 2.8: slowest")
+        #raise NotImplementedError("TODO 2.8: slowest")
 
 
 class Reporter:
