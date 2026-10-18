@@ -17,11 +17,11 @@
 
 ## How to run the Friday program
 
-```bash
+'''bash
 cd Friday
-python3 check_exercise.py     # expected: 24/24 checks passed
-python3 run_report.py
-```
+python check_exercise.py     # expected: 24/24 checks passed
+python run_report.py
+'''
 
 ## What I learned this week
 
