@@ -1,0 +1,7 @@
+{
+    "name" : "John Doe",
+    "age" : 20,
+    "major": "Computer Science",
+    "courses": ["Python", "Data STructures"]
+
+}
