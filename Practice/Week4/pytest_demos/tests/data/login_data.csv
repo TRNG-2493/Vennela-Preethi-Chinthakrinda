@@ -1,0 +1,5 @@
+username,password,expected
+admin,admin123,True
+admin,wrong,False
+,admin123,False
+guest,guest123,True
