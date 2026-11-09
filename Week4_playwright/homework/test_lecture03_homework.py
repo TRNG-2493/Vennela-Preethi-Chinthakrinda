@@ -116,7 +116,7 @@ def test_09_slow_report(store: Page):
 # 1.4 seconds
 
 
-
+'''
 def test_flaky_login(page: Page):
     page.goto(PRACTICE_PAGE.as_uri())
     page.locator("#username").fill("student")
@@ -124,7 +124,7 @@ def test_flaky_login(page: Page):
     page.locator("#login-button").click()
     time.sleep(1)
     assert page.locator("#login-message").text_content() == "Welcome, student!"
-    
+    '''
 # Explain in a comment what's wrong with it (there are at least 2 problems).
 # time.sleep is hard-coded wait, time is wasted if page is loaded and it fails if the page takes 
 # more time to load than that and assert is used - which is not recommended to use as
