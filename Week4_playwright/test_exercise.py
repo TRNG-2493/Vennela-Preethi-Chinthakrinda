@@ -10,6 +10,8 @@ def store(page:Page) -> Page:
     page.goto(PRACTICE_PAGE.as_uri())
     return page
 
+# PART - A
+
 def test_css_selectors(store:Page):
     # 1. The main page heading
     loc = store.locator("h1")
@@ -80,14 +82,19 @@ def test_css_selectors(store:Page):
     expect(loc).to_have_text("In stock")
     
     # 18. All h2 headings that are direct children of a section
-    
+    loc = store.locator("section > h2")
+    expect(loc).to_have_text(["Sign in", "Products", "Recent orders"])
     
     # 19. All rows in the orders table body (not the header row)
-    
+    loc = store.locator("table tbody tr")
+    expect(loc).to_have_count(4)
     
     # 20. The status cell of the second order row
-    
-    
+    loc = store.locator("table tbody tr:nth-child(2) td:nth-child(3)")
+    expect(loc).to_have_text("Pending")
+
+
+# PART - B
 def test_xpath_selectors(store:Page):
     
     #using xpath locate email
@@ -121,5 +128,55 @@ def test_xpath_selectors(store:Page):
     loc = store.locator("//label[contains(., 'Remember me')]//input[@type='checkbox']")
     expect(loc).to_have_id("remember")
 
+    # 8. The Checkout button, using its text
+    loc = store.locator("//button[text()='Checkout']")
+    expect(loc).to_have_attribute("data-testid", "checkout-button")
     
+    # 9. All product li elements, using the class attribute
+    loc = store.locator("//li[@class='product']")
+    expect(loc).to_have_count(4)
+    
+    # 10. The product heading with the text "Jacket"
+    loc = store.locator("//h3[text()='Jacket']")
+    expect(loc).to_be_visible()
+    
+    # 11. The price of "Bike Light", starting from its heading (use a sibling axis)
+    loc = store.locator("//h3[text()='Bike Light']/following-sibling::p[@class='price']")
+    expect(loc).to_have_text("$9.99")
+    
+    # 12. The name of the product that is "Out of stock" (go up to the parent, then down)
+    loc = store.locator("//*[text()='Out of stock']/../h3")
+    expect(loc).to_have_text("Bike Light")
+    
+    # 13. The "Add to cart" button of the "T-Shirt" product
+    loc = store.locator("//h3[text()='T-Shirt']/following-sibling::button[text()='Add to cart']")
+    expect(loc).to_be_enabled()
+    
+    # 14. All buttons that have the disabled attribute
+    loc = store.locator("//button[@disabled]")
+    expect(loc).to_have_count(1)
+    
+    # 15. The heading of the second product, using ( … )[n] indexing
+    loc = store.locator("(//li[@class='product']//h3)[2]")
+    expect(loc).to_have_text("Bike Light")
+    
+    # 16. The last price on the page, using last()
+    loc = store.locator("(//p[@class='price'])[last()]")
+    expect(loc).to_have_text("$49.99")
+    
+    # 17. All stock paragraphs whose text is exactly "In stock"
+    loc = store.locator("//p[@class='stock' and text()= 'In stock']")
+    expect(loc).to_have_count(3)
+    
+    # 18. The status of the order placed by "Chen Wei"
+    loc = store.locator("//tr[td[text()='Chen Wei']]/td[3]")
+    expect(loc).to_have_text("Shipped")
+    
+    # 19. The order number of the "Pending" order (use a preceding-sibling axis)
+    loc = store.locator("//td[text()='Pending']/preceding-sibling::td[2]")
+    expect(loc).to_have_text("1002")
+    
+    # 20. The total of the "Cancelled" order
+    loc = store.locator("//tr[td[text()='Cancelled']]/td[4]")
+    expect(loc).to_have_text("$15.99")
     
