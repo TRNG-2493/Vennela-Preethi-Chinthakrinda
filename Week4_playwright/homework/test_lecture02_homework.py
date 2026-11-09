@@ -19,55 +19,47 @@ def store(page: Page) -> Page:
 
 def test_01_products_link(store: Page):
     # TODO: the "Products" LINK in the navigation is visible
-    pass
-
+    expect(store.get_by_role("link", name="Products")).to_be_visible()
 
 def test_02_recent_orders_heading(store: Page):
     # TODO: the "Recent orders" heading is visible
-    pass
-
+    expect(store.get_by_text("Recent orders")).to_be_visible()
 
 def test_03_password_by_label(store: Page):
     # TODO: find the Password field by its label; check it is empty
     # Hint: expect(...).to_be_empty()
-    pass
-
+    expect(store.get_by_label("password")).to_be_empty()
 
 def test_04_email_by_placeholder(store: Page):
     # TODO: find the Email field by its placeholder; check it is visible
-    pass
-
+    expect(store.get_by_placeholder("you@example.com")).to_be_visible()
 
 def test_05_remember_me_checkbox(store: Page):
     # TODO: the "Remember me" checkbox is NOT checked
     # Hint: expect(...).not_to_be_checked()
-    pass
-
+    expect(store.get_by_label("Remember me")).not_to_be_checked()
 
 def test_06_logo_by_alt_text(store: Page):
     # TODO: find the logo image by its alt text; check it is attached
     # Hint: expect(...).to_be_attached()
-    pass
-
+    expect(store.get_by_alt_text("Practice Store logo")).to_be_attached()
 
 def test_07_shipping_icon_by_title(store: Page):
     # TODO: find the shipping icon by its title; check it is visible
-    pass
-
+    expect(store.get_by_title("Free shipping on orders over $50")).to_be_visible()
 
 def test_08_checkout_by_test_id(store: Page):
     # TODO: find the Checkout button by its test id; check it is visible
-    pass
-
-
+    expect(store.get_by_test_id("checkout-button")).to_be_visible()
+    
 def test_09_copyright_text(store: Page):
     # TODO: the footer text "2026 Practice Store" is visible
-    pass
+    expect(store.get_by_text("© 2026 Practice Store")).to_be_visible()
 
 
 def test_10_privacy_link(store: Page):
     # TODO: the "Privacy policy" link is visible
-    pass
+    expect(store.get_by_role("link", name = "Privacy Policy")).to_be_visible()
 
 
 # ================= PART 2: Filtering and chaining =================
@@ -76,31 +68,37 @@ def test_10_privacy_link(store: Page):
 def test_a_tshirt_price(store: Page):
     # TODO: in the T-Shirt product card, the price is "$15.99"
     # Hint: filter(has_text=...) then find ".price" inside it
-    pass
-
-
+    loc = store.locator(".product").filter(has_text="T-Shirt").locator(".price")
+    expect(loc).to_have_text("$15.99")
+    
 def test_b_in_stock_count(store: Page):
     # TODO: exactly 3 products are "In stock"
     # Hint: expect(...).to_have_count(3)
-    pass
-
+    loc = store.get_by_text("In stock")
+    expect(loc).to_have_count(3)
 
 def test_c_order_status(store: Page):
     # TODO: in the orders table, Ben Carter's order status is "Pending"
     # Hint: find the row, then the cells inside it. Which nth() is Status?
-    pass
+    loc = store.locator("table tbody tr").filter(has_text="Ben Carter").locator("td").nth(2)
+    expect(loc).to_have_text("Pending")
 
 
 def test_d_first_and_last(store: Page):
     # TODO: the LAST product name is "Jacket"
     # TODO: the FIRST product price is "$29.99"
-    pass
+    loc = store.locator(".product h3").last
+    expect(loc).to_have_text("Jacket")
+    
+    loc = store.locator(".product .price").first
+    expect(loc).to_have_text("$29.99")
 
 
 def test_e_bike_light_disabled(store: Page):
     # TODO: the Bike Light's "Add to cart" button is disabled
     # Hint: expect(...).to_be_disabled()
-    pass
+    loc = store.locator(".product").filter(has_text="Bike Light").get_by_role("button", name="Add to cart")
+    expect(loc).to_be_disabled()
 
 
 # ================= PART 2 QUESTION =================
@@ -108,3 +106,6 @@ def test_e_bike_light_disabled(store: Page):
 # What happens if you run
 #     store.get_by_role("button", name="Add to cart").click()
 # and how would you change it to click ONLY the Jacket's button?
+
+# If multiple Add to cart buttons exist, Playwright's strict mode will throw a 
+# strict mode violation error because .click() requires a unique matching element.
