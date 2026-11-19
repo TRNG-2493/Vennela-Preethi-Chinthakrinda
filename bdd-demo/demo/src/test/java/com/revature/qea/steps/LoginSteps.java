@@ -7,12 +7,15 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.time.Duration;
 
@@ -62,10 +65,16 @@ public class LoginSteps {
 
     @When("I log out")
     public void iLogOut() {
-        driver.findElement(By.id("react-burger-menu-btn")).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.id("logout_sidebar_link")))
-                .click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+    wait.until(ExpectedConditions.elementToBeClickable(
+        By.id("react-burger-menu-btn"))).click();
+
+    wait.until(ExpectedConditions.elementToBeClickable(
+        By.id("logout_sidebar_link"))).click();
+
+    wait.until(ExpectedConditions.visibilityOfElementLocated(
+        By.id("login-button")));
     }
 
     @Then("I should see the {string} page")
@@ -84,14 +93,63 @@ public class LoginSteps {
 
     @Then("I should be back on the login page")
     public void iShouldBeBackOnTheLoginPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(15))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
         String url = driver.getCurrentUrl();
         assertEquals("https://www.saucedemo.com/", url);
     }
 
+    @When("I sort products by price from low to high")
+    public void sortProductsByPriceLowToHigh(){
+           WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+           WebElement sortDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.className("product_sort_container")));
+
+           Select select = new Select(sortDropdown);
+           select.selectByValue("lohi");
+    }
+
+    @When("I add the first 2 products to the cart")
+    public void addFirstTwoProductsToCart() {
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    // Find all product containers
+    List<WebElement> products = wait.until(
+            ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.className("inventory_item")));
+
+    // Add the first two products
+    for (int i = 0; i < 2; i++) {
+
+        WebElement addButton = products.get(i)
+                .findElement(By.cssSelector("button"));
+
+        addButton.click();
+    }
+
+}
+@When("I open the shopping cart")
+public void openShoppingCart() {
+
+    driver.findElement(By.className("shopping_cart_link")).click();
+}
+
+@Then("I should see 2 items in the cart")
+public void verifyCartContainsTwoItems() {
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    List<WebElement> cartItems = wait.until(
+            ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.className("cart_item")));
+
+    assertEquals(2, cartItems.size());
+}
     @After(order = 0)
-    public void closeBrowser() {
+public void closeBrowser() {
+    if (driver != null) {
         driver.quit();
     }
+}
 }
