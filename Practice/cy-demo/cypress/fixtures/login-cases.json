@@ -1,0 +1,5 @@
+[
+  { "title": "valid user", "username": "standard_user", "password": "secret_sauce", "expectUrl": "/inventory.html" },
+  { "title": "locked user", "username": "locked_out_user", "password": "secret_sauce", "expectError": "locked out" },
+  { "title": "wrong password", "username": "standard_user", "password": "nope", "expectError": "do not match" }
+]
