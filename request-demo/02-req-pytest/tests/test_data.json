@@ -1,0 +1,26 @@
+[
+    {
+        "payload": {
+            "userId": 1,
+            "title": "Python",
+            "body": "Learning API automation"
+        },
+        "expected_status": 201
+    },
+    {
+        "payload": {
+            "userId": 2,
+            "title": "Pytest",
+            "body": "Parameterized API testing"
+        },
+        "expected_status": 201
+    },
+    {
+        "payload": {
+            "userId": 3,
+            "title": "Requests",
+            "body": "Testing POST requests"
+        },
+        "expected_status": 201
+    }
+]

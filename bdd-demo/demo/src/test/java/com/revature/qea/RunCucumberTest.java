@@ -12,8 +12,8 @@ import static io.cucumber.junit.platform.engine.Constants.SNIPPET_TYPE_PROPERTY_
 @Suite
 @IncludeEngines("cucumber")
 @SelectPackages ("features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.revature.qea.steps")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, summary")
-@ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
+//@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.revature.qea.steps")
+//@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, summary")
+//@ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
 public class RunCucumberTest {
 }

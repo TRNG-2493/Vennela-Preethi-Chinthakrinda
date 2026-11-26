@@ -18,7 +18,7 @@ Feature: Log in to Swag Labs
     When I log in with username "standard_user" and password "wrong_sauce"
     Then I should see the error "Epic sadface: Username and password do not match any user in this service"
 
-
+  @smoke
   Scenario: Logged-in user logs out
     Given I am on the login page
     And I have logged in with username "standard_user" and password "secret_sauce"

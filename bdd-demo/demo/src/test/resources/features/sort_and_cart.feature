@@ -1,5 +1,5 @@
 Feature: Sort products and add items to cart
-
+  @smoke
   Scenario: Sort products by price and add the first two items to cart
     Given I am on the login page
     And I have logged in with username "standard_user" and password "secret_sauce"
